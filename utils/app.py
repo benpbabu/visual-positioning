@@ -32,10 +32,9 @@ class VisualPositioningApp:
                 break
             results = self.model.predict(frame)[0]
             for box in results.boxes:
-                # if box.id is None:
-                #     continue
+                if box.cls[0].item() != 0:
+                    continue
                 color = self.colors[int(box.cls[0].item()) % len(self.colors)]
-                # color = (0, 0, 255)
                 name = results.names[box.cls[0].item()]
                 position = box.xyxy[0].tolist()
                 object_position = ((position[0] + position[2]) / 2, position[3])
